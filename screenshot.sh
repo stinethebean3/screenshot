@@ -1,10 +1,5 @@
 #!/bin/bash
 
-# Steps to install:
-# 1. Install imagemagick (For example: apt-get install imagemagick)
-# 2. Save this script to a folder in your $PATH (For example: $HOME/bin/ss)
-# 3. Update variables below as appropriate
-
 SSH_USERNAME="stinethebean"
 SSH_HOSTNAME="admin.hashbang.sh"
 PUBLIC_URL="stinethebean.hashbang.sh"
