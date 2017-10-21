@@ -1,18 +1,17 @@
 #!/bin/bash
 
-SSH_USERNAME="stinethebean"
-SSH_HOSTNAME="admin.hashbang.sh"
-PUBLIC_URL="http://stinethebean.hashbang.sh/$SCREENSHOT_FILE"
-PUBLIC_FOLDER="Public/"
-SCREENSHOT_DIR="$HOME/.screenshots"
-SCREENSHOT_FILE="$(date +%y-%m-%d-%H-%M-%S).png"
+filename="$(mktemp).jpg"
 
-mkdir -p "$SCREENSHOT_DIR"
+import "$filename"
 
-import "$SCREENSHOT_DIR/$SCREENSHOT_FILE"
+response="$( \
+	curl \
+		-sX POST \
+		-H "authorization: Client-ID $IMGUR_CLIENT_ID" \
+		-F "image=@$filename" https://api.imgur.com/3/image \
+)"
 
-scp "$SCREENSHOT_DIR/$SCREENSHOT_FILE" "$SSH_USERNAME@$SSH_HOSTNAME:$PUBLIC_FOLDER"
+url="$(echo $response | jq -r '.data.link')"
 
-echo "$PUBLIC_URL"
+echo $url | xclip -selection clip-board
 
-echo "$PUBLIC_URL" | xclip
